@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import request
 import pyodbc
 import os
 from functools import wraps
@@ -89,6 +90,40 @@ def inventario():
     except Exception as e:
         flash(f"Error al obtener productos: {e}", "error")
     return render_template("inventario.html", productos=productos, user=session.get("user_email"))
+
+
+# Ruta para agregar un nuevo producto
+@app.route("/productos/nuevo", methods=["GET", "POST"])
+@login_required
+def producto_nuevo():
+    if request.method == "POST":
+        nombre = request.form.get("nombre","").strip()
+        descripcion = request.form.get("descripcion","").strip()
+        cantidad = int(request.form.get("cantidad","0") or 0)
+        activo = 1 if request.form.get("activo") == "on" else 0
+
+        try:
+            with get_connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute("""
+                        INSERT INTO Productos (nombre, descripcion, cantidad, activo, fecha_creacion, fecha_modificacion)
+                        VALUES (?, ?, ?, ?, SYSDATETIME(), SYSDATETIME())
+                    """, (nombre, descripcion, cantidad, activo))
+                conn.commit()
+            flash("Producto creado.", "ok")
+            return redirect(url_for("inventario"))
+        except Exception as e:
+            flash(f"Error al crear: {e}", "error")
+
+    return render_template("producto_form.html", modo="nuevo")
+
+
+
+
+
+
+
+
 
 @app.route("/logout")
 def logout():
