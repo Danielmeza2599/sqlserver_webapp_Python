@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Agregar nuevo Producto</title>
+    <link rel="icon" href="/static/images/mezatechazullogosf.ico" type="image/x-icon">
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
@@ -22,6 +23,10 @@
       <button type="submit" class="btn-guardar">Guardar</button>
     </form>
   </div>
+  <div class="user">
+      <span>{{ user }}</span>
+      <a class="logout" href="{{ url_for('logout') }}">Salir</a>
+    </div>
 </div>
 </body>
 </html>
