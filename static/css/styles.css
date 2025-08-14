@@ -38,6 +38,24 @@ button:hover { filter: brightness(1.1); }
   margin-bottom: 12px;
 }
 .note { font-size: 12px; opacity: 0.7; }
+
+.btn-nuevo-producto {
+  display: inline-block;
+  background: #2563eb;
+  color: #fff;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-bottom: 18px;
+  margin-top: 8px;
+  box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.btn-nuevo-producto:hover {
+  background: #1e40af;
+  box-shadow: 0 4px 16px rgba(37,99,235,0.16);
+}
 .table-wrapper { overflow-x: auto; }
 table {
   width: 100%;
