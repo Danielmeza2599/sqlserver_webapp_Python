@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventario</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">Inventarios</div>
+    <div class="user">
+      <span>{{ user }}</span>
+      <a class="logout" href="{{ url_for('logout') }}">Salir</a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h1>Productos</h1>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, msg in messages %}
+            <div class="alert">{{ msg }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Cantidad</th>
+              <th>Activo</th>
+              <th>Creación</th>
+              <th>Modificación</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in productos %}
+              <tr>
+                <td>{{ p.id_producto }}</td>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.descripcion }}</td>
+                <td>{{ p.cantidad }}</td>
+                <td>{{ "Sí" if p.activo in (1, True, "1", "True", "true") else "No" }}</td>
+                <td>{{ p.fecha_creacion }}</td>
+                <td>{{ p.fecha_modificacion }}</td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="7" style="text-align:center;">No hay productos para mostrar.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
